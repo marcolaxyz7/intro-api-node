@@ -29,10 +29,35 @@ module.exports = {
 
     async cadastrarreserva_ambientes (request, response) {
         try{
+
+         const { userap_id, amb_id, res_horario_inicio, res_horario_fim, res_status, res_data_reserva } = request.body;
+         const res_id = 1;
+
+         const sql = `
+           INSERT INTO reserva_ambientes
+            ( userap_id, amb_id, res_horario_inicio, res_horario_fim, res_status, res_data_reserva)
+            VALUES
+             (?, ?, ?, ?, ?, ?);
+            `;
+
+            const values = [ userap_id, amb_id, res_horario_inicio, res_horario_fim, res_status, res_data_reserva ];
+
+            const [result] = await db.query(sql, values);
+
+            const dados = {
+                id: result.insertId,
+                userap_id,
+                amb_id,
+                res_horario_inicio,
+                res_horario_fim,
+                res_status,
+                res_data_reserva,
+            };
+
            return response.status(200).json({
                sucesso: true,
                mensagem: 'Cadastrar reserva_ambientes.',
-               dados: null
+               dados
            });
         } catch (error){
            return response.status(500).json({
@@ -63,13 +88,13 @@ module.exports = {
         try{
            return response.status(200).json({
                sucesso: true,
-               mensagem: 'Apagar reservas_ambientes.',
+               mensagem: 'Apagar reserva_ambientes.',
                dados: null
            });
         } catch (error){
            return response.status(500).json({
                sucesso: false,
-               mensagem: 'Erro ao apagar reservas_ambientes.',
+               mensagem: 'Erro ao apagar reserva_ambientes.',
                dados: error.message
            });
         }
