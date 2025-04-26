@@ -70,16 +70,28 @@ module.exports = {
 
     async editarreserva_ambientes (request, response) {
         try{
+
+            const { userap_id, amb_id, res_horario_inicio, res_horario_fim, res_status, res_data_reserva } = request.body;
+
+            const { id } = request.params;
+
+            const sql = `UPDATE reserva_ambientes Set userap_id = ?, amb_id = ?, res_horario_inicio = ?, res_horario_fim = ?, res_status = ?, res_data_reserva = ? 
+            WHERE res_id = ?`;
+
+            const values = [userap_id, amb_id, res_horario_inicio, res_horario_fim, res_status, res_data_reserva, id];
+
+            const atualizaDados = await db.query(sql, values);
+
            return response.status(200).json({
                sucesso: true,
-               mensagem: 'Editar reserva_ambientes.',
-               dados: null
+               mensagem: `reserva_ambientes ${id} Atualizado com sucesso!`,
+               dados: atualizaDados[0].affectedRows,
            });
         } catch (error){
            return response.status(500).json({
                sucesso: false,
                mensagem: 'Erro ao editar reserva_ambientes.',
-               dados: error.message
+               dados: error.message,
            });
         }
     },
