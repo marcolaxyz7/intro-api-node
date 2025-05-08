@@ -98,9 +98,26 @@ module.exports = {
 
     async apagarreserva_ambientes (request, response) {
         try{
+
+            const { id } = request.params;
+
+            const sql = `DELETE FROM reserva_ambientes WHERE id = ?`;
+
+            const values = [id];
+
+            const [result] = await db.query(sql, values);
+
+            if (result.affectedRows === 0) {
+                return res.status(404).json({
+                    sucesso: false,
+                    mensagem: `Reserva_Ambientes ${id} não encontrado!`,
+                    dados: null
+                });
+            }
+
            return response.status(200).json({
                sucesso: true,
-               mensagem: 'Apagar reserva_ambientes.',
+               mensagem: `Reserva_ambientes ${id} excluído com sucesso`,
                dados: null
            });
         } catch (error){
