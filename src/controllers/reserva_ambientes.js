@@ -82,6 +82,24 @@ module.exports = {
 
             const atualizaDados = await db.query(sql, values);
 
+            if (result.affectedRows === 0) {
+                return response.status(404).json({
+                    sucesso: false,
+                    mensagem: `ID ${id} não encontrado!`,
+                    dados: null
+                });
+            }
+
+            const dados = {
+                res_id,
+                userap_id,
+                amb_id,
+                res_horario_inicio,
+                res_horario_fim,
+                res_status,
+                res_data_reserva
+            };
+
            return response.status(200).json({
                sucesso: true,
                mensagem: `reserva_ambientes ${id} Atualizado com sucesso!`,
@@ -101,7 +119,7 @@ module.exports = {
 
             const { id } = request.params;
 
-            const sql = `DELETE FROM reserva_ambientes WHERE id = ?`;
+            const sql = `DELETE FROM reserva_ambientes WHERE res_id = ?`;
 
             const values = [id];
 
