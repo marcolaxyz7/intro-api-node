@@ -80,7 +80,7 @@ module.exports = {
 
             const values = [userap_id, amb_id, res_horario_inicio, res_horario_fim, res_status, res_data_reserva, id];
 
-            const atualizaDados = await db.query(sql, values);
+            const [result] = await db.query(sql, values);
 
             if (result.affectedRows === 0) {
                 return response.status(404).json({
@@ -91,7 +91,7 @@ module.exports = {
             }
 
             const dados = {
-                res_id,
+                res_id: id,
                 userap_id,
                 amb_id,
                 res_horario_inicio,
@@ -103,7 +103,7 @@ module.exports = {
            return response.status(200).json({
                sucesso: true,
                mensagem: `reserva_ambientes ${id} Atualizado com sucesso!`,
-               dados: atualizaDados[0].affectedRows,
+               dados
            });
         } catch (error){
            return response.status(500).json({
