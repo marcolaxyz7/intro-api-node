@@ -1,11 +1,8 @@
 const express = require('express');
 const router =  express.Router();
 
-const reserva_ambientesController = require('../controllers/reserva_ambientes');
+const RotasMarco = require('./routes');
 
-router.get('/reserva_ambientes', reserva_ambientesController.listarreserva_ambientes);
-router.post('/reserva_ambientes', reserva_ambientesController.cadastrarreserva_ambientes);
-router.patch('/reserva_ambientes/:id', reserva_ambientesController.editarreserva_ambientes);
-router.delete('/reserva_ambientes/:id', reserva_ambientesController.apagarreserva_ambientes);
+router.use('/', RotasMarco);
 
 module.exports = router;
