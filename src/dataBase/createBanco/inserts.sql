@@ -41,5 +41,5 @@ INSERT INTO Visitantes (vst_nome, vst_documento, ap_id, vst_data_visita)
 VALUES ('Carlos Souza', '123456789', 1, NOW());
 
 -- Notificacoes
-INSERT INTO Notificacoes (userAP_id, not_mensagem, not_data_envio, not_lida) 
+INSERT INTO Notificacoes (userap_id, not_mensagem, not_data_envio, not_lida) 
 VALUES (1, 'Sua reserva foi confirmada.', NOW(), FALSE);
